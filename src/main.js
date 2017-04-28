@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router/index'
-import ElementUI from '../node_modules/element-ui'
+import ElementUI from 'element-ui'
 import '../node_modules/element-ui/lib/theme-default/index.css'
 
 Vue.use(ElementUI)
