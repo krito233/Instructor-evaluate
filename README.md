@@ -1,8 +1,8 @@
-# evaluate-fe
+# 辅导员评价系统
 
-> A Vue.js project
+> 一个Vue项目，使用vue-cli的webpack模板生成
 
-## Build Setup
+## 开发步骤
 
 ``` bash
 # install dependencies
