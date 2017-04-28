@@ -417,8 +417,9 @@
   }
 
   .result p {
-    padding: 0 0 10px 20px;
+    padding: 15px 0 10px 20px;
     border-bottom: 1px solid #ebebeb;
+    margin: 0;
   }
 
   h1, h2 {
