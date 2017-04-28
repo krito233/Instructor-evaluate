@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <h1 class="title">中国石油大学(华东)辅导员考核测评表(学生)</h1>
     <div class="form">
       <el-cascader
@@ -16,10 +16,26 @@
           </ul>
           <div class="result">
             <p v-for="res in item.result">
-              <el-radio class="radio" v-model="radio" :label="res.value"> {{ res.name }} </el-radio>
+              <el-radio class="radio" v-model="radio[index]" :label="res.value"> {{ res.name }} </el-radio>
             </p>
           </div>
         </div>
+        <div class="message-container">
+          <p>还有什么想对辅导员说的意见和建议？</p>
+          <el-input
+            type="textarea"
+            :rows="2"
+            placeholder="意见和建议"
+            v-model="textarea">
+          </el-input>
+        </div>
+        <div class="submit-container">
+          <el-button type="danger">重置</el-button>
+          <el-button type="primary">提交</el-button>
+        </div>
+      </div>
+      <div class="footer">
+        中国石油大学（华东） 学工处
       </div>
     </div>
   </div>
@@ -378,7 +394,8 @@
               }
             ]
           }
-        ]
+        ],
+        radio: []
       }
     }
   }
@@ -450,11 +467,28 @@
     padding-top: 25px;
     box-sizing: border-box;
     font-weight: 600;
+    position: fixed;
+    top: 0;
+    z-index: 1;
   }
 
   .form {
+    margin-top: 70px;
     background-color: #f0f0f1;
     font-size: 13px;
     overflow: hidden;
+  }
+
+  .message-container {
+    margin: 4%;
+  }
+
+  .submit-container {
+    text-align: center;
+  }
+
+  .footer {
+    padding: 10px;
+    color: gray;
   }
 </style>
