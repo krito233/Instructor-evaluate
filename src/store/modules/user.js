@@ -60,7 +60,7 @@ const mutations = {
     state.token = token
   },
   [types.SET_ADMIN_TOKEN] (state, {token}) {
-    state.token = token
+    state.adminToken = token
   }
 }
 

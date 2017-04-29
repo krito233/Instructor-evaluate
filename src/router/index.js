@@ -4,6 +4,7 @@ import Index from '../components/Index.vue'
 import Evaluate from '../components/Evaluate.vue'
 import LoginPc from '../components/LoginPc.vue'
 import AdminMain from '../components/AdminMain.vue'
+import AdminResult from '../components/admin/AdminResult.vue'
 
 Vue.use(Router)
 
@@ -26,8 +27,16 @@ export default new Router({
     },
     {
       path: '/admin/main',
+      redirect: '/admin/main/result',
       name: 'adminMain',
-      component: AdminMain
+      component: AdminMain,
+      children: [
+        {
+          path: 'result',
+          name: 'adminResult',
+          component: AdminResult
+        }
+      ]
     }
   ]
 })
