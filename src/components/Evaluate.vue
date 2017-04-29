@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title">中国石油大学(华东)辅导员考核测评表(学生)</h1>
+    <h1 class="title">中国石油大学(华东)辅导员考核测评表</h1>
     <div class="form">
       <el-cascader
         placeholder=""

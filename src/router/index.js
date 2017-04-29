@@ -14,6 +14,7 @@ export default new Router({
     },
     {
       path: '/evaluate',
+      name: 'evaluate',
       component: Evaluate
     }
   ]

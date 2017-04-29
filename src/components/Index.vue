@@ -19,6 +19,7 @@
 </template>
 
 <script>
+  import API from '../config/request';
   export default {
     name: 'hello',
     data () {
@@ -53,9 +54,14 @@
     },
     methods: {
       submitForm(formName) {
+        let self = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let promise = self.$http.post(API.login, {number: self.loginForm.user, password: self.loginForm.pass});
+            self.$store.dispatch('doLogin', promise).then(
+              () => {this.$router.push('evaluate')},
+              () => {self.$notify.error({title: '登录错误', message: '账户或密码错误'});}
+            );
           } else {
             console.log('error submit!!');
             return false;

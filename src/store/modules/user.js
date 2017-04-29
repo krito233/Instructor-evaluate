@@ -15,12 +15,22 @@ const getters = {
 // actions
 const actions = {
   doLogin (context, promise) {
-    promise.then(
-      (res) => {
-        console.log('收到了');
-        console.log(res);
-      }
-    )
+    return new Promise((resolve, inject) => {
+      promise.then(
+        (res) => {
+          if (res.data.status === 0) {
+            context.commit(types.SET_TOKEN, {token: res.data.data});
+            resolve();
+          }
+          else {
+            inject();
+          }
+        },
+        (res) => {
+          inject();
+        }
+      )
+    })
   }
 }
 
