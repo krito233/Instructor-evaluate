@@ -9,7 +9,7 @@ const state = {
 
 // getters
 const getters = {
-
+  token: state => state.token
 }
 
 // actions
