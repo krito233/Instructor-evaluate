@@ -31,7 +31,7 @@
         </div>
         <div class="submit-container">
           <el-button type="danger">重置</el-button>
-          <el-button type="primary">提交</el-button>
+          <el-button type="primary" v-on:click="submitEvaluate">提交</el-button>
         </div>
       </div>
       <div class="footer">
@@ -397,6 +397,14 @@
         ],
         radio: ['', '', '', '', '', ''],
         textarea: ''
+      }
+    },
+    methods: {
+      submitEvaluate () {
+
+      },
+      validate () {
+
       }
     }
   }
