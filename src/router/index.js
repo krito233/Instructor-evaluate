@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from '../components/Index.vue'
 import Evaluate from '../components/Evaluate.vue'
 import LoginPc from '../components/LoginPc.vue'
+import SubmitSucceed from '../components/SubmitSucceed.vue'
 
 Vue.use(Router)
 
@@ -21,6 +22,11 @@ export default new Router({
     {
       path: '/loginPc',
       component: LoginPc
+    },
+    {
+      path: '/succeed',
+      name: 'succeed',
+      component: SubmitSucceed
     }
   ]
 })
