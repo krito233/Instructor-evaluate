@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from '../components/Index.vue'
 import Evaluate from '../components/Evaluate.vue'
 import LoginPc from '../components/LoginPc.vue'
+import AdminMain from '../components/AdminMain.vue'
 
 Vue.use(Router)
 
@@ -19,8 +20,14 @@ export default new Router({
       component: Evaluate
     },
     {
-      path: '/loginPc',
+      path: '/admin',
+      name: 'adminLogin',
       component: LoginPc
+    },
+    {
+      path: '/admin/main',
+      name: 'adminMain',
+      component: AdminMain
     }
   ]
 })

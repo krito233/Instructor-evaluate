@@ -4,12 +4,14 @@
 import * as types from '../mutation-types'
 
 const state = {
-  token: ''
+  token: '',
+  adminToken: ''
 }
 
 // getters
 const getters = {
-  token: state => state.token
+  token: state => state.token,
+  adminToken: state => state.adminToken
 }
 
 // actions
@@ -26,7 +28,25 @@ const actions = {
             inject();
           }
         },
+        () => {
+          inject();
+        }
+      )
+    })
+  },
+  adminLogin (context, promise) {
+    return new Promise((resolve, inject) => {
+      promise.then(
         (res) => {
+          if (res.data.status === 0) {
+            context.commit(types.SET_ADMIN_TOKEN, {token: res.data.data});
+            resolve();
+          }
+          else {
+            inject();
+          }
+        },
+        () => {
           inject();
         }
       )
@@ -37,6 +57,9 @@ const actions = {
 // mutations
 const mutations = {
   [types.SET_TOKEN] (state, {token}) {
+    state.token = token
+  },
+  [types.SET_ADMIN_TOKEN] (state, {token}) {
     state.token = token
   }
 }

@@ -14,7 +14,9 @@ const baseUrl = 'http://localhost:8086';
 const API = {
   login: baseUrl + '/instructor/login',
   submitEvaluate: baseUrl + '/instructor/submitEvaluate',
-  getInstructor: baseUrl + '/instructor/getInstructor'
+  getInstructor: baseUrl + '/instructor/getInstructor',
+
+  adminLogin: baseUrl + '/instructor/admin/login'
 };
 
 module.exports = API;
