@@ -3,15 +3,21 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router/index'
+import VueResource from 'vue-resource'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import store from './store'
 
 Vue.use(ElementUI)
+Vue.use(VueResource)
 Vue.config.productionTip = false
+
+Vue.http.options.emulateJSON = true;
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   template: '<App/>',
   components: { App }
