@@ -3,10 +3,11 @@
     <h1 class="title">中国石油大学(华东)辅导员考核测评表</h1>
     <div class="form">
       <el-cascader
-        placeholder=""
+        placeholder="请选择您的辅导员"
         :options="options"
         filterable
         change-on-select
+        v-model="selectedInstructor"
       ></el-cascader>
       <div class="content">
         <div class="subject" v-for="(item, index) in subject">
@@ -36,8 +37,6 @@
       </div>
       <div class="footer">
         中国石油大学（华东） 学工处
-
-
 
 
       </div>
@@ -206,29 +205,59 @@
           }
         ],
         radio: ['', '', '', '', '', ''],
-        textarea: ''
+        textarea: '',
+        selectedInstructor: []
       }
     },
-    mounted () {
+    computed: {
+      token() {
+        return this.$store.state.user.token;
+      }
+    },
+    mounted() {
       this.getTutorsData()
+      if (this.token === '') {
+          this.$router.push({name: 'index'})
+      }
     },
     methods: {
       submitEvaluate () {
+
+        let self = this
+
+        // 校验是否都选择了
         let sum = 0
         for (let i = 0; i < this.radio.length; i++) {
           if (this.radio[i] === '') {
+            self.$notify.error({title: '提交失败', message: '请确认每一项都选了'});
             return false
           } else {
             sum += parseInt(this.radio[i])
           }
         }
-        console.log(sum)
-        this.$http.post(API.submitEvaluate).then(response => {
 
-        })
-      },
-      validate () {
+        // 如果没选辅导员
+        if (this.selectedInstructor[1] === undefined) {
+          self.$notify.error({title: '提交失败', message: '请选择你的辅导员'});
+          return;
+        }
 
+        let postData = {
+          token: this.token, score: sum, instructorId: this.selectedInstructor[1]
+        };
+
+        if (this.textarea !== '') {
+          postData.message = this.textarea;
+        }
+
+        this.$http.post(API.submitEvaluate, postData).then(
+          (res) => {
+            if (res.data.status === 0) {
+              self.$notify({title: '提交成功', message: '成功提交对辅导员的评价', type: 'success'});
+            }
+          },
+          () => {self.$notify.error({title: '提交失败', message: '请检查网络或填写项是否完整'});}
+        )
       },
       getTutorsData () {
         let arr = []
@@ -259,6 +288,9 @@
 <style scoped>
   .el-cascader {
     width: 100%;
+    position: fixed;
+    left: 0;
+    z-index: 1;
   }
 
   .subject {
