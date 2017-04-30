@@ -13,7 +13,7 @@
   .right {
     font-size: 80px;
     color: #55ae94;
-    margin-top: 12%;
+    margin-top: 20%;
     margin-bottom: 10px;
   }
 

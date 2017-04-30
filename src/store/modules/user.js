@@ -39,6 +39,7 @@ const actions = {
       promise.then(
         (res) => {
           if (res.data.status === 0) {
+            localStorage.setItem('adminToken', res.data.data);
             context.commit(types.SET_ADMIN_TOKEN, {token: res.data.data});
             resolve();
           }
@@ -53,6 +54,7 @@ const actions = {
     })
   },
   adminLogout (context) {
+    localStorage.removeItem('adminToken');
     context.commit(types.ADMIN_LOGOUT);
     return true;
   }
