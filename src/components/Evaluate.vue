@@ -3,10 +3,11 @@
     <h1 class="title">中国石油大学(华东)辅导员考核测评表</h1>
     <div class="form">
       <el-cascader
-        placeholder=""
+        placeholder="请选择您的辅导员"
         :options="options"
         filterable
         change-on-select
+        v-model="selectedInstructor"
       ></el-cascader>
       <div class="content">
         <div class="subject" v-for="(item, index) in subject">
@@ -31,216 +32,24 @@
         </div>
         <div class="submit-container">
           <el-button type="danger">重置</el-button>
-          <el-button type="primary">提交</el-button>
+          <el-button type="primary" v-on:click="submitEvaluate">提交</el-button>
         </div>
       </div>
       <div class="footer">
         中国石油大学（华东） 学工处
+
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import API from '../config/request'
   export default {
     data () {
       return {
-        options: [
-          {
-            value: 'zhinan',
-            label: '指南',
-            children: [{
-              value: 'shejiyuanze',
-              label: '设计原则',
-              children: [{
-                value: 'yizhi',
-                label: '一致'
-              }, {
-                value: 'fankui',
-                label: '反馈'
-              }, {
-                value: 'xiaolv',
-                label: '效率'
-              }, {
-                value: 'kekong',
-                label: '可控'
-              }]
-            }, {
-              value: 'daohang',
-              label: '导航',
-              children: [{
-                value: 'cexiangdaohang',
-                label: '侧向导航'
-              }, {
-                value: 'dingbudaohang',
-                label: '顶部导航'
-              }]
-            }]
-          }, {
-            value: 'zujian',
-            label: '组件',
-            children: [{
-              value: 'basic',
-              label: 'Basic',
-              children: [{
-                value: 'layout',
-                label: 'Layout 布局'
-              }, {
-                value: 'color',
-                label: 'Color 色彩'
-              }, {
-                value: 'typography',
-                label: 'Typography 字体'
-              }, {
-                value: 'icon',
-                label: 'Icon 图标'
-              }, {
-                value: 'button',
-                label: 'Button 按钮'
-              }]
-            }, {
-              value: 'form',
-              label: 'Form',
-              children: [{
-                value: 'radio',
-                label: 'Radio 单选框'
-              }, {
-                value: 'checkbox',
-                label: 'Checkbox 多选框'
-              }, {
-                value: 'input',
-                label: 'Input 输入框'
-              }, {
-                value: 'input-number',
-                label: 'InputNumber 计数器'
-              }, {
-                value: 'select',
-                label: 'Select 选择器'
-              }, {
-                value: 'cascader',
-                label: 'Cascader 级联选择器'
-              }, {
-                value: 'switch',
-                label: 'Switch 开关'
-              }, {
-                value: 'slider',
-                label: 'Slider 滑块'
-              }, {
-                value: 'time-picker',
-                label: 'TimePicker 时间选择器'
-              }, {
-                value: 'date-picker',
-                label: 'DatePicker 日期选择器'
-              }, {
-                value: 'datetime-picker',
-                label: 'DateTimePicker 日期时间选择器'
-              }, {
-                value: 'upload',
-                label: 'Upload 上传'
-              }, {
-                value: 'rate',
-                label: 'Rate 评分'
-              }, {
-                value: 'form',
-                label: 'Form 表单'
-              }]
-            }, {
-              value: 'data',
-              label: 'Data',
-              children: [{
-                value: 'table',
-                label: 'Table 表格'
-              }, {
-                value: 'tag',
-                label: 'Tag 标签'
-              }, {
-                value: 'progress',
-                label: 'Progress 进度条'
-              }, {
-                value: 'tree',
-                label: 'Tree 树形控件'
-              }, {
-                value: 'pagination',
-                label: 'Pagination 分页'
-              }, {
-                value: 'badge',
-                label: 'Badge 标记'
-              }]
-            }, {
-              value: 'notice',
-              label: 'Notice',
-              children: [{
-                value: 'alert',
-                label: 'Alert 警告'
-              }, {
-                value: 'loading',
-                label: 'Loading 加载'
-              }, {
-                value: 'message',
-                label: 'Message 消息提示'
-              }, {
-                value: 'message-box',
-                label: 'MessageBox 弹框'
-              }, {
-                value: 'notification',
-                label: 'Notification 通知'
-              }]
-            }, {
-              value: 'navigation',
-              label: 'Navigation',
-              children: [{
-                value: 'menu',
-                label: 'NavMenu 导航菜单'
-              }, {
-                value: 'tabs',
-                label: 'Tabs 标签页'
-              }, {
-                value: 'breadcrumb',
-                label: 'Breadcrumb 面包屑'
-              }, {
-                value: 'dropdown',
-                label: 'Dropdown 下拉菜单'
-              }, {
-                value: 'steps',
-                label: 'Steps 步骤条'
-              }]
-            }, {
-              value: 'others',
-              label: 'Others',
-              children: [{
-                value: 'dialog',
-                label: 'Dialog 对话框'
-              }, {
-                value: 'tooltip',
-                label: 'Tooltip 文字提示'
-              }, {
-                value: 'popover',
-                label: 'Popover 弹出框'
-              }, {
-                value: 'card',
-                label: 'Card 卡片'
-              }, {
-                value: 'carousel',
-                label: 'Carousel 走马灯'
-              }, {
-                value: 'collapse',
-                label: 'Collapse 折叠面板'
-              }]
-            }]
-          }, {
-            value: 'ziyuan',
-            label: '资源',
-            children: [{
-              value: 'axure',
-              label: 'Axure Components'
-            }, {
-              value: 'sketch',
-              label: 'Sketch Templates'
-            }, {
-              value: 'jiaohu',
-              label: '组件交互文档'
-            }]
-          }],
+        options: [],
         subject: [
           {
             content: [
@@ -396,7 +205,81 @@
           }
         ],
         radio: ['', '', '', '', '', ''],
-        textarea: ''
+        textarea: '',
+        selectedInstructor: []
+      }
+    },
+    computed: {
+      token() {
+        return this.$store.state.user.token;
+      }
+    },
+    mounted() {
+      this.getTutorsData()
+      if (this.token === '') {
+          this.$router.push({name: 'index'})
+      }
+    },
+    methods: {
+      submitEvaluate () {
+
+        let self = this
+
+        // 校验是否都选择了
+        let sum = 0
+        for (let i = 0; i < this.radio.length; i++) {
+          if (this.radio[i] === '') {
+            self.$notify.error({title: '提交失败', message: '请确认每一项都选了'});
+            return false
+          } else {
+            sum += parseInt(this.radio[i])
+          }
+        }
+
+        // 如果没选辅导员
+        if (this.selectedInstructor[1] === undefined) {
+          self.$notify.error({title: '提交失败', message: '请选择你的辅导员'});
+          return;
+        }
+
+        let postData = {
+          token: this.token, score: sum, instructorId: this.selectedInstructor[1]
+        };
+
+        if (this.textarea !== '') {
+          postData.message = this.textarea;
+        }
+
+        this.$http.post(API.submitEvaluate, postData).then(
+          (res) => {
+            if (res.data.status === 0) {
+              self.$notify({title: '提交成功', message: '成功提交对辅导员的评价', type: 'success'});
+              this.$router.push({name: 'succeed'})
+            }
+          },
+          () => {self.$notify.error({title: '提交失败', message: '请检查网络或填写项是否完整'});}
+        )
+      },
+      getTutorsData () {
+        let arr = []
+        this.$http.get(API.getInstructor).then(response => {
+          for (let item in response.data) {
+            let temp = {}
+            let tempArr = []
+            temp.label = item
+            temp.value = item
+            for (let i = 0; i < response.data[item].length; i++) {
+              const data = response.data[item]
+              let obj = {}
+              obj.label = data[i].name
+              obj.value = data[i].id
+              tempArr.push(obj)
+            }
+            temp.children = tempArr
+            arr.push(temp)
+          }
+          this.options = arr
+        })
       }
     }
   }
@@ -406,6 +289,9 @@
 <style scoped>
   .el-cascader {
     width: 100%;
+    position: fixed;
+    left: 0;
+    z-index: 1;
   }
 
   .subject {

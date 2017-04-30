@@ -16,18 +16,26 @@
 </template>
 
 <script>
+  import API from '../config/request'
   export default {
     name: 'login',
     data () {
       return {
-        formRight: {}
+        formRight: {
+          name: '',
+          password: ''
+        }
       }
     },
     methods: {
-      changeToReg () {
-        this.$router.push('/reg')
-      },
-      handleLogin () {}
+      handleLogin () {
+        let self = this
+        let promise = self.$http.post(API.adminLogin, {username: self.formRight.name, password: self.formRight.password});
+        self.$store.dispatch('adminLogin', promise).then(
+          () => {self.$router.push({name: 'adminMain'})},
+          () => {self.$notify.error({title: '登录错误', message: '账户或密码错误'});}
+        );
+      }
     }
   }
 </script>
@@ -49,7 +57,7 @@
       transform: translate(-50%, -50%);
 
       .logo {
-        font-size:35px;
+        font-size: 35px;
         color: rgba(102, 102, 102, 0.5);
         text-align: center;
         margin-bottom: 40px;
