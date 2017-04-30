@@ -254,6 +254,7 @@
           (res) => {
             if (res.data.status === 0) {
               self.$notify({title: '提交成功', message: '成功提交对辅导员的评价', type: 'success'});
+              this.$router.push({name: 'succeed'})
             }
           },
           () => {self.$notify.error({title: '提交失败', message: '请检查网络或填写项是否完整'});}

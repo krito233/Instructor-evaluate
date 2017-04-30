@@ -6,6 +6,7 @@ import LoginPc from '../components/LoginPc.vue'
 import AdminMain from '../components/AdminMain.vue'
 import AdminResult from '../components/admin/AdminResult.vue'
 import AdminUpload from '../components/admin/AdminUpload.vue'
+import SubmitSucceed from '../components/SubmitSucceed.vue'
 
 Vue.use(Router)
 
@@ -43,6 +44,11 @@ export default new Router({
           component: AdminUpload
         }
       ]
+    },
+    {
+      path: '/succeed',
+      name: 'succeed',
+      component: SubmitSucceed
     }
   ]
 })
