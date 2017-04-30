@@ -5,6 +5,7 @@ import Evaluate from '../components/Evaluate.vue'
 import LoginPc from '../components/LoginPc.vue'
 import AdminMain from '../components/AdminMain.vue'
 import AdminResult from '../components/admin/AdminResult.vue'
+import AdminUpload from '../components/admin/AdminUpload.vue'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
           path: 'result',
           name: 'adminResult',
           component: AdminResult
+        },
+        {
+          path: 'upload',
+          name: 'adminUpload',
+          component: AdminUpload
         }
       ]
     }

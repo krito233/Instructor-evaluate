@@ -50,7 +50,10 @@
   .result-container {
 
     .table-container {
-      padding: 20px 60px;
+      display: inline-block;
+      padding: 40px 60px;
+      min-width: 800px;
+      max-width: 1200px;
     }
   }
 </style>
