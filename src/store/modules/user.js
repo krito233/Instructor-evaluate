@@ -51,6 +51,10 @@ const actions = {
         }
       )
     })
+  },
+  adminLogout (context) {
+    context.commit(types.ADMIN_LOGOUT);
+    return true;
   }
 }
 
@@ -61,6 +65,9 @@ const mutations = {
   },
   [types.SET_ADMIN_TOKEN] (state, {token}) {
     state.adminToken = token
+  },
+  [types.ADMIN_LOGOUT] (state) {
+    state.adminToken = ''
   }
 }
 

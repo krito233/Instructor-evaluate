@@ -40,7 +40,7 @@
     },
     methods: {
       loadData() {
-        let self = this
+        let self = this;
         this.$http.get(API.showEvaluate, {params: {token: self.adminToken}}).then(
           (res) => {
             self.tableData = res.data
