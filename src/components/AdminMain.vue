@@ -29,7 +29,7 @@
       this.activeIndex = this.getCurrentActiveIndex();
 
       // 是否管理员 是否已登录
-//      this.confirmLogin();
+      this.confirmLogin();
     },
     methods: {
       handleSelect(key, keyPath) {
