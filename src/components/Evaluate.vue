@@ -10,6 +10,7 @@
         v-model="selectedInstructor"
       ></el-cascader>
       <div class="content">
+        <p class="description">填写说明：请先从上面的下拉框中选择您的辅导员，然后完整选择以下内容，意见选填。</p>
         <div class="subject" v-for="(item, index) in subject">
           <span class="index"> {{ index + 1 }}、</span>
           <ul>
@@ -31,7 +32,7 @@
           </el-input>
         </div>
         <div class="submit-container">
-          <el-button type="danger">重置</el-button>
+          <el-button type="danger" v-on:click="resetForm">重置</el-button>
           <el-button type="primary" v-on:click="submitEvaluate">提交</el-button>
         </div>
       </div>
@@ -217,7 +218,7 @@
     mounted() {
       this.getTutorsData()
       if (this.token === '') {
-          this.$router.push({name: 'index'})
+        this.$router.push({name: 'index'})
       }
     },
     methods: {
@@ -257,7 +258,9 @@
               this.$router.push({name: 'succeed'})
             }
           },
-          () => {self.$notify.error({title: '提交失败', message: '请检查网络或填写项是否完整'});}
+          () => {
+            self.$notify.error({title: '提交失败', message: '请检查网络或填写项是否完整'});
+          }
         )
       },
       getTutorsData () {
@@ -280,6 +283,11 @@
           }
           this.options = arr
         })
+      },
+      resetForm() {
+        this.radio = ['', '', '', '', '', ''];
+        this.textarea = '';
+        this.selectedInstructor = [];
       }
     }
   }
@@ -292,6 +300,12 @@
     position: fixed;
     left: 0;
     z-index: 1;
+  }
+
+  .description {
+    padding: 20px 30px 0 30px;
+    color: red;
+    font-size: medium;
   }
 
   .subject {
