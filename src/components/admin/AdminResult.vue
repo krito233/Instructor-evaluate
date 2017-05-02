@@ -43,7 +43,9 @@
         let self = this;
         this.$http.get(API.showEvaluate, {params: {token: self.adminToken}}).then(
           (res) => {
-            self.tableData = res.data
+            if (res.data.status === 0) {
+              self.tableData = res.data.data
+            }
           }
         )
       }
