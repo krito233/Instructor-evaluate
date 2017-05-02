@@ -31,8 +31,9 @@
           (res) => {
             if (res.data.status === 0) {
               self.$notify({title: '上传成功', message: '请转至查看结果页查看新的辅导员列表', type: 'success'});
+            } else {
+              self.$notify.error({title: '上传失败', message: '请确认自己的管理员身份，刷新页面重试'});
             }
-            self.$notify.error({title: '上传失败', message: '请确认自己的管理员身份，刷新页面重试'});
           },
         () => {self.$notify.error({title: '上传失败', message: '请确认自己的网络，若多次失败，请联系开发者'});}
         )
