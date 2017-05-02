@@ -15,6 +15,7 @@ const API = {
   login: baseUrl + '/instructor/login',
   submitEvaluate: baseUrl + '/instructor/submitEvaluate',
   getInstructor: baseUrl + '/instructor/getInstructor',
+  yibanAuth: baseUrl + '/instructor/loginbyyiban',
 
   adminLogin: baseUrl + '/instructor/admin/login',
   showEvaluate: baseUrl + '/instructor/showEvaluate',

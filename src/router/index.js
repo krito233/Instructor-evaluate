@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '../components/Index.vue'
+import YibanAuth from '../components/YibanAuth.vue'
 import Evaluate from '../components/Evaluate.vue'
 import LoginPc from '../components/LoginPc.vue'
 import AdminMain from '../components/AdminMain.vue'
@@ -17,6 +18,11 @@ export default new Router({
       path: '/',
       name: 'index',
       component: Index
+    },
+    {
+      path: '/yiban',
+      name: 'yibanAuth',
+      component: YibanAuth
     },
     {
       path: '/evaluate',
