@@ -3,7 +3,7 @@
     <h1 class="title">中国石油大学(华东)辅导员考核测评表</h1>
     <div class="form">
       <div class="content">
-        <p class="description">请评价您的辅导员: {{instrcutorName}}</p>
+        <p class="description">请评价您的辅导员: {{instructor.name}}</p>
         <div class="subject" v-for="(item, index) in subject">
           <span class="index"> {{ index + 1 }}、</span>
           <ul>
@@ -26,12 +26,41 @@
         </div>
         <div class="submit-container">
           <el-button type="danger" v-on:click="resetForm">重置</el-button>
-          <el-button type="primary" v-on:click="submitEvaluate">提交</el-button>
+          <el-button type="primary" v-on:click="submitEvaluate(1)">提交</el-button>
         </div>
       </div>
-      <div class="footer">
-        中国石油大学（华东） 学工处
+    </div>
+    <div class="second-form" v-if="instructor.secondInstructorName!==''">
+      <div class="content">
+        <p class="description">请评价您的另一位辅导员: {{instructor.secondInstructorName}}</p>
+        <div class="subject" v-for="(item, index) in subject">
+          <span class="index"> {{ index + 1 }}、</span>
+          <ul>
+            <li v-for="content in item.content"> {{ content }} </li>
+          </ul>
+          <div class="result">
+            <p v-for="res in item.result">
+              <el-radio class="radio" v-model="secondRadio[index]" :label="res.value"> {{ res.name }} </el-radio>
+            </p>
+          </div>
+        </div>
+        <div class="message-container">
+          <p>还有什么想对辅导员说的意见和建议？</p>
+          <el-input
+            type="textarea"
+            :rows="2"
+            placeholder="意见和建议"
+            v-model="secondTextarea">
+          </el-input>
+        </div>
+        <div class="submit-container">
+          <el-button type="danger" v-on:click="resetForm">重置</el-button>
+          <el-button type="primary" v-on:click="submitEvaluate(2)">提交</el-button>
+        </div>
       </div>
+    </div>
+    <div class="footer">
+      中国石油大学（华东） 学工处
     </div>
   </div>
 </template>
@@ -41,7 +70,6 @@
   export default {
     data () {
       return {
-        instrcutorName: '',
         subject: [
           {
             content: [
@@ -197,13 +225,17 @@
           }
         ],
         radio: ['', '', '', '', '', ''],
+        secondRadio: ['', '', '', '', '', ''],
         textarea: '',
-        selectedInstructor: []
+        secondTextarea: ''
       }
     },
     computed: {
       token() {
         return this.$store.state.user.token;
+      },
+      instructor() {
+        return this.$store.state.user.instructor;
       }
     },
     mounted() {
@@ -212,46 +244,78 @@
       }
     },
     methods: {
-      submitEvaluate () {
-
-        let self = this
-
-        // 校验是否都选择了
-        let sum = 0
-        for (let i = 0; i < this.radio.length; i++) {
-          if (this.radio[i] === '') {
-            self.$notify.error({title: '提交失败', message: '请确认每一项都选了'});
-            return false
-          } else {
-            sum += parseInt(this.radio[i])
-          }
-        }
-
-        // 如果没选辅导员
-        if (this.selectedInstructor[1] === undefined) {
-          self.$notify.error({title: '提交失败', message: '请选择你的辅导员'});
-          return;
-        }
-
-        let postData = {
-          token: this.token, score: sum, instructorId: this.selectedInstructor[1]
-        };
-
-        if (this.textarea !== '') {
-          postData.message = this.textarea;
-        }
-
-        this.$http.post(API.submitEvaluate, postData).then(
-          (res) => {
-            if (res.data.status === 0) {
-              self.$notify({title: '提交成功', message: '成功提交对辅导员的评价', type: 'success'});
-              this.$router.push({name: 'succeed'})
+      submitEvaluate (flag) {
+        // 如果是1，则是评价第一位辅导员，2则是评价第二位辅导员
+        if (flag === 1) {
+          // 校验是否都选择了
+          let sum = 0;
+          for (let i = 0; i < this.radio.length; i++) {
+            if (this.radio[i] === '') {
+              this.$notify.error({title: '提交失败', message: '请确认每一项都选了'});
+              return false
+            } else {
+              sum += parseInt(this.radio[i])
             }
-          },
-          () => {
-            self.$notify.error({title: '提交失败', message: '请检查网络或填写项是否完整'});
           }
-        )
+
+          let postData = {
+            token: this.token, score: sum, flag: flag
+          };
+
+          if (this.textarea !== '') {
+            postData.message = this.textarea;
+          }
+
+          this.$http.post(API.submitEvaluate, postData).then(
+            (res) => {
+              if (res.data.status === 0) {
+                this.$notify({title: '提交成功', message: '成功提交对辅导员的评价', type: 'success'});
+                this.$router.push({name: 'succeed'})
+              } else {
+                this.$notify.error({title: '提交失败', message: '已经评价过，请勿重复评价'});
+              }
+            },
+            () => {
+              this.$notify.error({title: '提交失败', message: '请检查网络或填写项是否完整'});
+            }
+          )
+
+        } else if (flag === 2) {
+
+          // 校验是否都选择了
+          let sum = 0;
+          for (let i = 0; i < this.secondRadio.length; i++) {
+            if (this.secondRadio[i] === '') {
+              this.$notify.error({title: '提交失败', message: '请确认每一项都选了'});
+              return false
+            } else {
+              sum += parseInt(this.secondRadio[i])
+            }
+          }
+
+          let postData = {
+            token: this.token, score: sum, flag: flag
+          };
+
+          if (this.secondTextarea !== '') {
+            postData.message = this.secondTextarea;
+          }
+
+          this.$http.post(API.submitEvaluate, postData).then(
+            (res) => {
+              if (res.data.status === 0) {
+                this.$notify({title: '提交成功', message: '成功提交对辅导员的评价', type: 'success'});
+                this.$router.push({name: 'succeed'})
+              } else {
+                this.$notify.error({title: '提交失败', message: '已经评价过，请勿重复评价'});
+              }
+            },
+            () => {
+              this.$notify.error({title: '提交失败', message: '请检查网络或填写项是否完整'});
+            }
+          )
+
+        }
       },
       resetForm() {
         this.radio = ['', '', '', '', '', ''];
@@ -344,6 +408,12 @@
 
   .form {
     margin-top: 70px;
+    background-color: #f0f0f1;
+    font-size: 13px;
+    overflow: hidden;
+  }
+
+  .second-form {
     background-color: #f0f0f1;
     font-size: 13px;
     overflow: hidden;
