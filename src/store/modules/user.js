@@ -5,13 +5,18 @@ import * as types from '../mutation-types'
 
 const state = {
   token: '',
-  adminToken: ''
+  adminToken: '',
+  instructor: {
+    name: '',
+    secondInstructorName: ''
+  }
 }
 
 // getters
 const getters = {
   token: state => state.token,
-  adminToken: state => state.adminToken
+  adminToken: state => state.adminToken,
+  instructor: state => state.instructor
 }
 
 // actions
@@ -22,6 +27,7 @@ const actions = {
         (res) => {
           if (res.data.status === 0) {
             context.commit(types.SET_TOKEN, {token: res.data.data});
+            context.commit(types.SET_INSTRUCTOR, res.data);
             resolve();
           }
           else {
@@ -70,6 +76,12 @@ const mutations = {
   },
   [types.ADMIN_LOGOUT] (state) {
     state.adminToken = ''
+  },
+  [types.SET_INSTRUCTOR] (state, data) {
+    state.instructor.name = data.instructorName;
+    if (data.hasSecond) {
+      state.instructor.secondInstructorName = data.secondInstructorName;
+    }
   }
 }
 

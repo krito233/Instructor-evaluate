@@ -2,15 +2,8 @@
   <div>
     <h1 class="title">中国石油大学(华东)辅导员考核测评表</h1>
     <div class="form">
-      <el-cascader
-        placeholder="请选择您的辅导员"
-        :options="options"
-        filterable
-        change-on-select
-        v-model="selectedInstructor"
-      ></el-cascader>
       <div class="content">
-        <p class="description">填写说明：请先从上面的下拉框中选择您的辅导员，然后完整选择以下内容，意见选填。</p>
+        <p class="description">请评价您的辅导员: {{instrcutorName}}</p>
         <div class="subject" v-for="(item, index) in subject">
           <span class="index"> {{ index + 1 }}、</span>
           <ul>
@@ -38,8 +31,6 @@
       </div>
       <div class="footer">
         中国石油大学（华东） 学工处
-
-
       </div>
     </div>
   </div>
@@ -50,7 +41,7 @@
   export default {
     data () {
       return {
-        options: [],
+        instrcutorName: '',
         subject: [
           {
             content: [
@@ -216,7 +207,6 @@
       }
     },
     mounted() {
-      this.getTutorsData()
       if (this.token === '') {
         this.$router.push({name: 'index'})
       }
@@ -263,27 +253,6 @@
           }
         )
       },
-      getTutorsData () {
-        let arr = []
-        this.$http.get(API.getInstructor).then(response => {
-          for (let item in response.data) {
-            let temp = {}
-            let tempArr = []
-            temp.label = item
-            temp.value = item
-            for (let i = 0; i < response.data[item].length; i++) {
-              const data = response.data[item]
-              let obj = {}
-              obj.label = data[i].name
-              obj.value = data[i].id
-              tempArr.push(obj)
-            }
-            temp.children = tempArr
-            arr.push(temp)
-          }
-          this.options = arr
-        })
-      },
       resetForm() {
         this.radio = ['', '', '', '', '', ''];
         this.textarea = '';
@@ -322,7 +291,7 @@
 
   .content {
     width: 100%;
-    margin-top: 40px;
+    margin-top: 20px;
     text-align: left;
   }
 
