@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="evaluate-container">
     <h1 class="title">中国石油大学(华东)辅导员考核测评表</h1>
     <div class="form">
       <div class="content">
@@ -19,7 +19,7 @@
           <p>还有什么想对辅导员说的意见和建议？</p>
           <el-input
             type="textarea"
-            :rows="2"
+            :rows="3"
             placeholder="意见和建议"
             v-model="textarea">
           </el-input>
@@ -48,7 +48,7 @@
           <p>还有什么想对辅导员说的意见和建议？</p>
           <el-input
             type="textarea"
-            :rows="2"
+            :rows="3"
             placeholder="意见和建议"
             v-model="secondTextarea">
           </el-input>
@@ -270,7 +270,9 @@
             (res) => {
               if (res.data.status === 0) {
                 this.$notify({title: '提交成功', message: '成功提交对辅导员的评价', type: 'success'});
-                this.$router.push({name: 'succeed'})
+                if (this.instructor.secondInstructorName === '') {
+                  this.$router.push({name: 'succeed'})
+                }
               } else {
                 this.$notify.error({title: '提交失败', message: '已经评价过，请勿重复评价'});
               }
@@ -328,6 +330,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .evaluate-container {
+    background-color: #f0f0f1;
+  }
+
   .el-cascader {
     width: 100%;
     position: fixed;
@@ -408,13 +414,11 @@
 
   .form {
     margin-top: 70px;
-    background-color: #f0f0f1;
     font-size: 13px;
     overflow: hidden;
   }
 
   .second-form {
-    background-color: #f0f0f1;
     font-size: 13px;
     overflow: hidden;
   }

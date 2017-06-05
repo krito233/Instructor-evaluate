@@ -2,7 +2,6 @@
   <div>
     <p class="right">✔</p>
     <p class="succeed">提交成功啦！</p>
-    <p>还有一位辅导员？<span class="re-evaluate" v-on:click="reEvaluate">再次评价</span></p>
   </div>
 </template>
 
