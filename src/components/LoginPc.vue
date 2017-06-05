@@ -19,12 +19,22 @@
   import API from '../config/request'
   export default {
     name: 'login',
+    computed: {
+      adminToken() {
+        return this.$store.state.user.adminToken;
+      }
+    },
     data () {
       return {
         formRight: {
           name: '',
           password: ''
         }
+      }
+    },
+    mounted() {
+      if (this.adminToken !== '') {
+        this.$router.push({name: 'adminMain'});
       }
     },
     methods: {
@@ -35,7 +45,7 @@
           () => {self.$router.push({name: 'adminMain'})},
           () => {self.$notify.error({title: '登录错误', message: '账户或密码错误'});}
         );
-      }
+      },
     }
   }
 </script>

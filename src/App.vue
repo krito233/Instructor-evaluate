@@ -5,8 +5,19 @@
 </template>
 
 <script>
+  import * as types from './store/mutation-types'
   export default {
-    name: 'app'
+    name: 'app',
+    mounted () {
+      this.readDataFromLocalStorage();
+    },
+    methods: {
+      readDataFromLocalStorage() {
+        if (localStorage.getItem('adminToken') !== null) {
+          this.$store.commit(types.SET_ADMIN_TOKEN, {token: localStorage.getItem('adminToken')});
+        }
+      }
+    }
   }
 </script>
 

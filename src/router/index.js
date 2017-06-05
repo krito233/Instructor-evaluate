@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '../components/Index.vue'
+import YibanAuth from '../components/YibanAuth.vue'
 import Evaluate from '../components/Evaluate.vue'
 import LoginPc from '../components/LoginPc.vue'
 import AdminMain from '../components/AdminMain.vue'
 import AdminResult from '../components/admin/AdminResult.vue'
 import AdminUpload from '../components/admin/AdminUpload.vue'
+import AdminLogout from '../components/admin/AdminLogout.vue'
 import SubmitSucceed from '../components/SubmitSucceed.vue'
 
 Vue.use(Router)
@@ -16,6 +18,11 @@ export default new Router({
       path: '/',
       name: 'index',
       component: Index
+    },
+    {
+      path: '/yiban',
+      name: 'yibanAuth',
+      component: YibanAuth
     },
     {
       path: '/evaluate',
@@ -42,6 +49,11 @@ export default new Router({
           path: 'upload',
           name: 'adminUpload',
           component: AdminUpload
+        },
+        {
+          path: 'logout',
+          name: 'adminLogout',
+          component: AdminLogout
         }
       ]
     },
