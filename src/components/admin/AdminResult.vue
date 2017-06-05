@@ -45,6 +45,10 @@
           (res) => {
             if (res.data.status === 0) {
               self.tableData = res.data.data
+            } else if (res.data.status === 1) {
+              // 登录异常
+              this.$store.dispatch('adminLogout');
+              this.$router.push({name: 'adminLogin'})
             }
           }
         )
