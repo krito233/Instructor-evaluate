@@ -8,6 +8,7 @@ import AdminMain from '../components/AdminMain.vue'
 import AdminResult from '../components/admin/AdminResult.vue'
 import AdminUpload from '../components/admin/AdminUpload.vue'
 import AdminLogout from '../components/admin/AdminLogout.vue'
+import AdminDetail from '../components/admin/AdminDetail.vue'
 import SubmitSucceed from '../components/SubmitSucceed.vue'
 
 Vue.use(Router)
@@ -54,6 +55,11 @@ export default new Router({
           path: 'logout',
           name: 'adminLogout',
           component: AdminLogout
+        },
+        {
+          path: 'detail/:id',
+          name: 'adminDetail',
+          component: AdminDetail
         }
       ]
     },
