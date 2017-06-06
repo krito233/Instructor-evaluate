@@ -334,6 +334,10 @@
     background-color: #f0f0f1;
   }
 
+  .result .el-radio {
+    width: 100%;
+  }
+
   .el-cascader {
     width: 100%;
     position: fixed;

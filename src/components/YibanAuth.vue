@@ -36,6 +36,7 @@
             } else if (res.data.status === 0) {
               // 授权正常
               self.$store.commit(types.SET_TOKEN, {token: res.data.data});
+              self.$store.commit(types.SET_INSTRUCTOR, res.data);
               self.$router.push({name: 'evaluate'});
             }
           }
