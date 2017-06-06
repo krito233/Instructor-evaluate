@@ -1,7 +1,6 @@
 <template>
   <div class="main-container">
-    <el-menu theme="dark" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :router="true"
-             @select="handleSelect">
+    <el-menu theme="dark" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" select="handleSelect">
       <el-menu-item index="result">查看结果</el-menu-item>
       <el-menu-item index="upload">上传数据</el-menu-item>
       <el-menu-item style="float: right" index="logout">退出</el-menu-item>
@@ -29,8 +28,15 @@
       this.activeIndex = this.getCurrentActiveIndex();
     },
     methods: {
-      handleSelect(key, keyPath) {
-//        console.log(key, keyPath);
+      handleSelect(key) {
+        switch (key) {
+          case 'result':
+            this.$router.push('/admin/main/result');
+            break;
+          case 'upload':
+            this.$router.push('/admin/main/upload');
+            break;
+        }
       },
       getCurrentActiveIndex() {
         switch (this.$route.path) {

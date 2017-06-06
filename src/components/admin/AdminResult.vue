@@ -25,7 +25,6 @@
           width="100">
           <template scope="scope">
             <el-button v-on:click="handleTableClick(scope.row)" type="text" size="small">查看</el-button>
-            <!--<el-button type="text" size="small">编辑</el-button>-->
           </template>
         </el-table-column>
       </el-table>
