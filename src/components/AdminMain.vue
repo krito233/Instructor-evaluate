@@ -27,9 +27,6 @@
     },
     mounted() {
       this.activeIndex = this.getCurrentActiveIndex();
-
-      // 是否管理员 是否已登录
-      this.confirmLogin();
     },
     methods: {
       handleSelect(key, keyPath) {
@@ -46,6 +43,19 @@
       confirmLogin() {
         if (this.adminToken === '') {
           this.$router.push({name: 'adminLogin'});
+        }
+      },
+      init() {
+        if (this.$store.state.app.init) {
+          this.confirmLogin();
+        } else {
+          this.$store.watch(function (state) {
+            return state.app.init;
+          }, () => {
+            if (this.$store.state.app.init) {
+              this.confirmLogin();
+            }
+          })
         }
       }
     }

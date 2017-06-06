@@ -7,15 +7,26 @@
         style="width: 100%">
         <el-table-column
           prop="academy"
-          label="学院">
+          label="学院"
+          sortable>
         </el-table-column>
         <el-table-column
           prop="name"
-          label="姓名">
+          label="姓名"
+          sortable>
         </el-table-column>
         <el-table-column
           prop="score"
-          label="分数">
+          label="分数"
+          sortable>
+        </el-table-column>
+        <el-table-column
+          label="操作"
+          width="100">
+          <template scope="scope">
+            <el-button v-on:click="handleTableClick(scope.row)" type="text" size="small">查看</el-button>
+            <!--<el-button type="text" size="small">编辑</el-button>-->
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -36,7 +47,7 @@
       }
     },
     mounted() {
-      this.loadData()
+      this.init();
     },
     methods: {
       loadData() {
@@ -52,6 +63,22 @@
             }
           }
         )
+      },
+      handleTableClick(row) {
+        this.$router.push({name: 'adminDetail', params: {id: row.number}})
+      },
+      init() {
+        if (this.$store.state.app.init) {
+          this.loadData();
+        } else {
+          this.$store.watch(function (state) {
+            return state.app.init;
+          }, () => {
+            if (this.$store.state.app.init) {
+              this.loadData();
+            }
+          })
+        }
       }
     }
   }
