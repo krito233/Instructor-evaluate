@@ -1,5 +1,6 @@
 <template>
   <div class="result-container">
+    <p>计算量较大，请等待数据加载，勿频繁刷新。</p>
     <div class="table-container">
       <el-table
         :data="tableData"
@@ -18,6 +19,11 @@
         <el-table-column
           prop="score"
           label="分数"
+          sortable>
+        </el-table-column>
+        <el-table-column
+          prop="voteRate"
+          label="评价率"
           sortable>
         </el-table-column>
         <el-table-column

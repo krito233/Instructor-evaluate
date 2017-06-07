@@ -23,6 +23,9 @@
         </el-table-column>
       </el-table>
     </div>
+    <div class="no-vote-list">
+      <p>未评价学生学号：<span v-for="item in noVoteList">{{item}} , </span></p>
+    </div>
   </div>
 </template>
 
@@ -31,7 +34,8 @@
   export default {
     data() {
       return {
-        tableData: []
+        tableData: [],
+        noVoteList: []
       }
     },
     created() {
@@ -58,9 +62,9 @@
         };
         this.$http.post(API.evaluateDetail, postData).then(
           (res) => {
-            console.log(res);
             if (res.data.status === 0) {
               this.tableData = res.data.data;
+              this.noVoteList = res.data.noVoteList;
             }
           }
         )
@@ -77,6 +81,10 @@
     padding: 20px;
 
     .table-container {
+      margin: 20px 20%;
+    }
+
+    .no-vote-list {
       margin: 20px 20%;
     }
   }
