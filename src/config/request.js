@@ -19,7 +19,8 @@ const API = {
 
   adminLogin: baseUrl + '/instructor/admin/login',
   showEvaluate: baseUrl + '/instructor/showEvaluate',
-  uploadInstructors: baseUrl + '/instructor/uploadInstructor'
+  uploadInstructors: baseUrl + '/instructor/uploadInstructor',
+  evaluateDetail: baseUrl + '/instructor/showEvaluateDetail'
 };
 
 module.exports = API;

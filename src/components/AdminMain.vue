@@ -1,7 +1,6 @@
 <template>
   <div class="main-container">
-    <el-menu theme="dark" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :router="true"
-             @select="handleSelect">
+    <el-menu theme="dark" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <el-menu-item index="result">查看结果</el-menu-item>
       <el-menu-item index="upload">上传数据</el-menu-item>
       <el-menu-item style="float: right" index="logout">退出</el-menu-item>
@@ -27,13 +26,20 @@
     },
     mounted() {
       this.activeIndex = this.getCurrentActiveIndex();
-
-      // 是否管理员 是否已登录
-      this.confirmLogin();
     },
     methods: {
-      handleSelect(key, keyPath) {
-//        console.log(key, keyPath);
+      handleSelect(key) {
+        switch (key) {
+          case 'result':
+            this.$router.push('/admin/main/result');
+            break;
+          case 'upload':
+            this.$router.push('/admin/main/upload');
+            break;
+          case 'logout':
+            this.$router.push('/admin/main/logout');
+            break;
+        }
       },
       getCurrentActiveIndex() {
         switch (this.$route.path) {
@@ -46,6 +52,19 @@
       confirmLogin() {
         if (this.adminToken === '') {
           this.$router.push({name: 'adminLogin'});
+        }
+      },
+      init() {
+        if (this.$store.state.app.init) {
+          this.confirmLogin();
+        } else {
+          this.$store.watch(function (state) {
+            return state.app.init;
+          }, () => {
+            if (this.$store.state.app.init) {
+              this.confirmLogin();
+            }
+          })
         }
       }
     }

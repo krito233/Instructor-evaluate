@@ -1,6 +1,7 @@
 <template>
   <div class="auth-container">
-    授权获取中，请耐心等待。
+    <p>授权获取中，请耐心等待。</p>
+    <p>该应用只有中国石油大学（华东）的认证用户可使用</p>
   </div>
 </template>
 
@@ -28,7 +29,7 @@
               // 接口故障，弹出提示
               self.$notify.error({
                 title: '授权获取错误',
-                message: '接口故障，请联系开发者，三秒后为您跳转回首页'
+                message: '接口故障，或您不是中国石油大学（华东）的认证用户，三秒后为您跳转回首页'
               });
               setTimeout(function () {
                 self.$router.push({name: 'index'});
@@ -36,6 +37,7 @@
             } else if (res.data.status === 0) {
               // 授权正常
               self.$store.commit(types.SET_TOKEN, {token: res.data.data});
+              self.$store.commit(types.SET_INSTRUCTOR, res.data);
               self.$router.push({name: 'evaluate'});
             }
           }
