@@ -36,6 +36,9 @@
           case 'upload':
             this.$router.push('/admin/main/upload');
             break;
+          case 'logout':
+            this.$router.push('/admin/main/logout');
+            break;
         }
       },
       getCurrentActiveIndex() {

@@ -15,8 +15,8 @@
       readDataFromLocalStorage() {
         if (localStorage.getItem('adminToken') !== null) {
           this.$store.commit(types.SET_ADMIN_TOKEN, {token: localStorage.getItem('adminToken')});
-          this.$store.commit(types.INIT_APPLICATION);
         }
+        this.$store.commit(types.INIT_APPLICATION);
       }
     }
   }
