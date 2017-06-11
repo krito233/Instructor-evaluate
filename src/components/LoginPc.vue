@@ -33,9 +33,7 @@
       }
     },
     mounted() {
-      if (this.adminToken !== '') {
-        this.$router.push({name: 'adminMain'});
-      }
+      this.init();
     },
     methods: {
       handleLogin () {
@@ -46,6 +44,24 @@
           () => {self.$notify.error({title: '登录错误', message: '账户或密码错误'});}
         );
       },
+      init() {
+        if (this.$store.state.app.init) {
+          this.checkLogin();
+        } else {
+          this.$store.watch(function (state) {
+            return state.app.init;
+          }, () => {
+            if (this.$store.state.app.init) {
+              this.checkLogin();
+            }
+          })
+        }
+      },
+      checkLogin() {
+        if (this.adminToken !== '') {
+          this.$router.push({name: 'adminMain'});
+        }
+      }
     }
   }
 </script>
