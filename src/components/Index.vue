@@ -74,6 +74,8 @@
       },
       goYibanAuth() {
         window.location.href = 'https://openapi.yiban.cn/oauth/authorize?client_id=' + config.APPID + '&redirect_uri=' + config.redirectUrl + '&display=html';
+        // window.location.href = '';
+        // this.$router.push({name: 'evaluate'});
       }
     }
   }

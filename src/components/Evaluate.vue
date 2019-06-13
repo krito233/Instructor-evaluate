@@ -59,6 +59,35 @@
         </div>
       </div>
     </div>
+    <div class="third-form" v-if="instructor.thirdInstructorName!==''">
+      <div class="content">
+        <p class="description">请评价您的另一位辅导员: {{instructor.thirdInstructorName}}</p>
+        <div class="subject" v-for="(item, index) in subject">
+          <span class="index"> {{ index + 1 }}、</span>
+          <ul>
+            <li v-for="content in item.content"> {{ content }} </li>
+          </ul>
+          <div class="result">
+            <p v-for="res in item.result">
+              <el-radio class="radio" v-model="thirdRadio[index]" :label="res.value"> {{ res.name }} </el-radio>
+            </p>
+          </div>
+        </div>
+        <div class="message-container">
+          <p>还有什么想对辅导员说的意见和建议？</p>
+          <el-input
+            type="textarea"
+            :rows="3"
+            placeholder="意见和建议"
+            v-model="thirdTextarea">
+          </el-input>
+        </div>
+        <div class="submit-container">
+          <el-button type="danger" v-on:click="resetForm">重置</el-button>
+          <el-button type="primary" v-on:click="submitEvaluate(3)">提交</el-button>
+        </div>
+      </div>
+    </div>
     <div class="footer">
       中国石油大学（华东） 学工处
     </div>
@@ -226,8 +255,10 @@
         ],
         radio: ['', '', '', '', '', ''],
         secondRadio: ['', '', '', '', '', ''],
+        thirdRadio: ['', '', '', '', '', ''],
         textarea: '',
-        secondTextarea: ''
+        secondTextarea: '',
+        thirdTextarea: ''
       }
     },
     computed: {
@@ -238,11 +269,11 @@
         return this.$store.state.user.instructor;
       }
     },
-    mounted() {
-      if (this.token === '') {
-        this.$router.push({name: 'index'})
-      }
-    },
+    // mounted() {
+    //   if (this.token === '') {
+    //     this.$router.push({name: 'index'})
+    //   }
+    // },
     methods: {
       submitEvaluate (flag) {
         // 如果是1，则是评价第一位辅导员，2则是评价第二位辅导员
@@ -317,6 +348,39 @@
             }
           )
 
+        } else if(flag === 3){
+          // 校验是否都选择了
+          let sum = 0;
+          for (let i = 0; i < this.thirdRadio.length; i++) {
+            if (this.thirdRadio[i] === '') {
+              this.$notify.error({title: '提交失败', message: '请确认每一项都选了'});
+              return false
+            } else {
+              sum += parseInt(this.thirdRadio[i])
+            }
+          }
+
+          let postData = {
+            token: this.token, score: sum, flag: flag
+          };
+
+          if (this.thirdTextarea !== '') {
+            postData.message = this.thirdTextarea;
+          }
+
+          this.$http.post(API.submitEvaluate, postData).then(
+            (res) => {
+              if (res.data.status === 0) {
+                this.$notify({title: '提交成功', message: '成功提交对辅导员的评价', type: 'success'});
+                this.$router.push({name: 'succeed'})
+              } else {
+                this.$notify.error({title: '提交失败', message: '已经评价过，请勿重复评价'});
+              }
+            },
+            () => {
+              this.$notify.error({title: '提交失败', message: '请检查网络或填写项是否完整'});
+            }
+          )
         }
       },
       resetForm() {
@@ -423,6 +487,11 @@
   }
 
   .second-form {
+    font-size: 13px;
+    overflow: hidden;
+  }
+
+  .third-form {
     font-size: 13px;
     overflow: hidden;
   }

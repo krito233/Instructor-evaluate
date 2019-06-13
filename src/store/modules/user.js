@@ -8,7 +8,8 @@ const state = {
   adminToken: '',
   instructor: {
     name: '',
-    secondInstructorName: ''
+    secondInstructorName: '',
+    thirdInstructorName: ''
   }
 }
 
@@ -81,6 +82,9 @@ const mutations = {
     state.instructor.name = data.instructorName;
     if (data.hasSecond) {
       state.instructor.secondInstructorName = data.secondInstructorName;
+    }
+    if (data.hasThird) {
+      state.instructor.thirdInstructorName = data.thirdInstructorName;
     }
   }
 }
