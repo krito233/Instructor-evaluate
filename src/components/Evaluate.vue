@@ -269,11 +269,11 @@
         return this.$store.state.user.instructor;
       }
     },
-    // mounted() {
-    //   if (this.token === '') {
-    //     this.$router.push({name: 'index'})
-    //   }
-    // },
+    mounted() {
+      if (this.token === '') {
+        this.$router.push({name: 'index'})
+      }
+    },
     methods: {
       submitEvaluate (flag) {
         // 如果是1，则是评价第一位辅导员，2则是评价第二位辅导员
