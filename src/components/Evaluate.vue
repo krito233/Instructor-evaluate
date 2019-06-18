@@ -338,7 +338,9 @@
             (res) => {
               if (res.data.status === 0) {
                 this.$notify({title: '提交成功', message: '成功提交对辅导员的评价', type: 'success'});
-                this.$router.push({name: 'succeed'})
+                if (this.instructor.thirdInstructorName === ''){
+                  this.$router.push({name: 'succeed'})
+                }
               } else {
                 this.$notify.error({title: '提交失败', message: '已经评价过，请勿重复评价'});
               }
